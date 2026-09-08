@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CuraCase AI | Intelligent Patient Case Taking & Clinical Documentation</title>
+  <meta name="description" content="Transform patient case taking into precise, structured clinical notes in under 3 minutes. Ambient voice intake, multi-specialty templates, and smart ICD-10 coding.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN (v3.4) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              300: '#5eead4',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+              950: '#042f2e',
+            },
+            medical: {
+              blue: '#0284c7',
+              navy: '#0f172a',
+              darkbg: '#0a0f1d',
+              cardbg: '#111827',
+              emerald: '#10b981'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-[#0a0f1d] dark:text-slate-100 min-h-screen transition-colors duration-300 antialiased selection:bg-teal-500 selection:text-white">
+
+  <!-- =========================================================================
+       1. Top Announcement Bar
+       ========================================================================= -->
+  <div class="bg-gradient-to-r from-teal-700 via-teal-600 to-sky-700 text-white text-xs font-medium py-2 px-4 text-center relative z-50 flex items-center justify-center gap-2">
+    <span class="bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">v3.2 Update</span>
+    <span>Ambient Multilingual Voice Intake with 99.8% Clinical Accuracy is now live!</span>
+    <a href="#simulator" class="underline hover:text-teal-200 transition-colors font-semibold ml-1 inline-flex items-center gap-1">
+      Try Simulator <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+    </a>
+  </div>
+
+  <!-- =========================================================================
+       2. Sticky Navigation Bar
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 w-full glass-nav border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-teal-600 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-teal-500/25 group-hover:scale-105 transition-transform duration-300">
+          <i data-lucide="activity" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <span class="text-xl font-extrabold tracking-tight font-sans text-slate-900 dark:text-white flex items-center gap-1">
+            CuraCase<span class="text-teal-600 dark:text-teal-400">AI</span>
+          </span>
+          <span class="text-[10px] uppercase font-bold tracking-widest text-slate-600 dark:text-slate-300 block -mt-1">
+            Clinical Case Taking
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-300">
+        <a href="#features" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Features</a>
+        <a href="#simulator" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors flex items-center gap-1">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Live Simulator
+        </a>
+        <a href="#specialties" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Specialties</a>
+        <a href="#calculator" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">ROI Calculator</a>
+        <a href="#pricing" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Pricing</a>
+        <a href="#faq" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">FAQ</a>
+      </nav>
+
+      <!-- Action Buttons & Theme Toggle -->
+      <div class="flex items-center gap-3">
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle" type="button" aria-label="Toggle Theme" class="p-2.5 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+          <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+          <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+        </button>
+
+        <!-- Book Demo Button -->
+        <button type="button" class="open-demo-modal hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-teal-500 dark:hover:border-teal-500 text-slate-700 dark:text-slate-200 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200">
+          Book Demo
+        </button>
+
+        <!-- Free Trial CTA Button -->
+        <button type="button" class="open-demo-modal inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 text-white text-sm font-semibold shadow-lg shadow-teal-500/25 hover:shadow-teal-500/40 transition-all duration-200 transform hover:-translate-y-0.5">
+          <span>Start Free Trial</span>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" type="button" class="lg:hidden p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Mobile Slideover Drawer -->
+  <div id="mobile-drawer" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 lg:hidden">
+    <div class="drawer-panel fixed right-0 top-0 bottom-0 w-80 max-w-full bg-white dark:bg-slate-900 p-6 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col justify-between overflow-y-auto">
+      <div>
+        <div class="flex items-center justify-between pb-6 border-b border-slate-100 dark:border-slate-800">
+          <div class="flex items-center gap-2">
+            <div class="w-9 h-9 rounded-lg bg-teal-600 text-white flex items-center justify-center">
+              <i data-lucide="activity" class="w-5 h-5"></i>
+            </div>
+            <span class="font-bold text-slate-900 dark:text-white">CuraCase AI</span>
+          </div>
+          <button id="mobile-menu-close" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <nav class="flex flex-col gap-4 mt-6 text-base font-medium text-slate-700 dark:text-slate-300">
+          <a href="#features" class="mobile-nav-link py-2 hover:text-teal-600 dark:hover:text-teal-400">Features</a>
+          <a href="#simulator" class="mobile-nav-link py-2 text-teal-600 dark:text-teal-400 flex items-center justify-between">
+            <span>Live Simulator</span>
+            <span class="text-xs bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 px-2 py-0.5 rounded-full font-bold">Interactive</span>
+          </a>
+          <a href="#specialties" class="mobile-nav-link py-2 hover:text-teal-600 dark:hover:text-teal-400">Specialty Templates</a>
+          <a href="#calculator" class="mobile-nav-link py-2 hover:text-teal-600 dark:hover:text-teal-400">ROI Calculator</a>
+          <a href="#pricing" class="mobile-nav-link py-2 hover:text-teal-600 dark:hover:text-teal-400">Pricing</a>
+          <a href="#faq" class="mobile-nav-link py-2 hover:text-teal-600 dark:hover:text-teal-400">FAQ</a>
+        </nav>
+      </div>
+
+      <div class="pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-3">
+        <button id="theme-toggle-mobile" class="w-full py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center gap-2 text-sm font-medium">
+          <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+          <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+          <span>Switch Appearance</span>
+        </button>
+        <button class="open-demo-modal w-full py-3 rounded-xl bg-teal-600 text-white font-semibold text-sm shadow-md">
+          Start 14-Day Free Trial
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       3. Hero Section
+       ========================================================================= -->
+  <section class="relative pt-12 pb-24 md:pt-20 md:pb-32 overflow-hidden bg-radial-gradient">
+    <div class="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-4xl mx-auto">
+        
+        <!-- Hero Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 dark:bg-teal-950/60 border border-teal-200 dark:border-teal-800/80 text-teal-700 dark:text-teal-300 text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-teal-500 animate-ping"></span>
+          Intelligent Clinical Case Taking & Anamnesis
+        </div>
+
+        <!-- Hero Headline -->
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15] mb-6">
+          Turn 25-Minute Patient Case Taking into <span class="gradient-text">3 Minutes</span> of Flawless Clinical Notes
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed font-normal max-w-3xl mx-auto">
+          Capture ambient doctor-patient consultations, extract nuanced symptoms across Allopathy, Homeopathy & Pediatrics, and auto-generate structured SOAP notes, ICD-10 codes, and differential diagnoses in real time.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
+          <a href="#simulator" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-700 hover:to-teal-600 text-white font-bold text-base shadow-xl shadow-teal-500/25 hover:shadow-teal-500/40 transition-all duration-200 flex items-center justify-center gap-3 transform hover:-translate-y-0.5">
+            <i data-lucide="play-circle" class="w-5 h-5 text-teal-200"></i>
+            <span>Test Live Case Simulator</span>
+          </a>
+          <button type="button" class="open-demo-modal w-full sm:w-auto px-8 py-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:border-teal-500 dark:hover:border-teal-400 text-slate-800 dark:text-white font-semibold text-base shadow-sm hover:shadow transition-all duration-200 flex items-center justify-center gap-2">
+            <i data-lucide="calendar" class="w-5 h-5 text-teal-600 dark:text-teal-400"></i>
+            <span>Book 1-on-1 Practice Demo</span>
+          </button>
+        </div>
+
+        <!-- Trust & Compliance Badges -->
+        <div class="pt-6 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-wrap items-center justify-center gap-y-3 gap-x-8 text-xs font-semibold text-slate-600 dark:text-slate-300">
+          <div class="flex items-center gap-2">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
+            <span>HIPAA Compliant & BAA</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="lock" class="w-4 h-4 text-teal-500"></i>
+            <span>256-Bit AES Encryption</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-500"></i>
+            <span>HL7 & FHIR Interoperable</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i data-lucide="award" class="w-4 h-4 text-amber-500"></i>
+            <span>99.8% Clinical Accuracy</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Hero Visual: Ambient Scribe Snapshot Card -->
+      <div class="mt-14 max-w-5xl mx-auto">
+        <div class="glass-card rounded-2xl p-4 sm:p-6 shadow-2xl glow-teal relative overflow-hidden">
+          
+          <!-- Top Bar -->
+          <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-200 dark:border-slate-800">
+            <div class="flex items-center gap-3">
+              <div class="flex gap-1.5">
+                <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+              </div>
+              <span class="text-xs font-mono text-slate-600 dark:text-slate-300 flex items-center gap-1.5 ml-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                LIVE AMBIENT CASE INTAKE • ENCRYPTED SESSION
+              </span>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="px-2.5 py-1 rounded-md bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 font-semibold">
+                General Medicine
+              </span>
+              <span class="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono">
+                Pt #8942
+              </span>
+            </div>
+          </div>
+
+          <!-- Hero Grid Preview -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 text-left">
+            <!-- Left: Ambient Stream -->
+            <div class="md:col-span-5 bg-slate-100/80 dark:bg-slate-900/90 rounded-xl p-4 border border-slate-200/60 dark:border-slate-800">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                  <i data-lucide="mic" class="w-3.5 h-3.5 text-red-500 animate-pulse"></i>
+                  Doctor-Patient Speech Stream
+                </span>
+                <div class="flex items-center gap-0.5 h-4">
+                  <span class="audio-bar"></span>
+                  <span class="audio-bar"></span>
+                  <span class="audio-bar"></span>
+                  <span class="audio-bar"></span>
+                  <span class="audio-bar"></span>
+                  <span class="audio-bar"></span>
+                </div>
+              </div>
+              <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed italic mb-3">
+                "Patient: Doctor, I've had this deep pressing chest pain for 3 days after climbing stairs. It eases with rest. I have high blood pressure..."
+              </p>
+              <div class="flex flex-wrap gap-1.5 pt-2 border-t border-slate-200 dark:border-slate-800">
+                <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-medium">✓ Chest Pain Detected</span>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-medium">✓ Provocation: Exertion</span>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-medium">✓ HTN History Extracted</span>
+              </div>
+            </div>
+
+            <!-- Right: Structured Note Auto-Synthesis -->
+            <div class="md:col-span-7 bg-white dark:bg-slate-950 rounded-xl p-4 border border-slate-200 dark:border-slate-800">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                  Real-time Structured H&P / SOAP
+                </span>
+                <span class="text-[10px] text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950 font-bold px-2 py-0.5 rounded">
+                  ICD-10 I20.9 AUTO-MATCHED
+                </span>
+              </div>
+              <div class="space-y-2 text-xs">
+                <div>
+                  <span class="font-bold text-slate-800 dark:text-slate-200">Chief Complaint:</span>
+                  <span class="text-slate-600 dark:text-slate-400 ml-1">Retrosternal chest tightness and exertional dyspnea × 3 days.</span>
+                </div>
+                <div>
+                  <span class="font-bold text-slate-800 dark:text-slate-200">HPI:</span>
+                  <span class="text-slate-600 dark:text-slate-400 ml-1">Progressive pressure provoked by stairs, relieved by rest. No radiation. High CV risk profile.</span>
+                </div>
+                <div class="p-2 rounded bg-teal-50/70 dark:bg-teal-950/40 border border-teal-100 dark:border-teal-900/60 flex items-center justify-between text-[11px]">
+                  <span class="font-semibold text-teal-900 dark:text-teal-200">Suggested Action: 12-Lead ECG Stat + Cardiac Enzymes</span>
+                  <span class="text-teal-600 dark:text-teal-400 font-bold">1-Click EHR Push →</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       4. Live Interactive Case Taking Simulator (Core Centerpiece)
+       ========================================================================= -->
+  <section id="simulator" class="py-20 bg-white dark:bg-slate-900/80 border-y border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 text-xs font-bold uppercase tracking-wider mb-3">
+          Interactive Live Sandbox
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Experience Intelligent Case Taking in Action
+        </h2>
+        <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg mt-3">
+          Select a clinical specialty below and simulate an ambient voice consultation. Watch how CuraCase extracts nuanced clinical symptoms and formats an actionable case record.
+        </p>
+      </div>
+
+      <!-- Preset Specialty Selectors -->
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8">
+        <button type="button" data-preset="general" class="preset-btn px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-teal-600 text-white shadow-md flex items-center gap-2 transition-all">
+          <i data-lucide="stethoscope" class="w-4 h-4"></i>
+          <span>Internal Medicine (Chest Pain)</span>
+        </button>
+        <button type="button" data-preset="pediatrics" class="preset-btn px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center gap-2 transition-all">
+          <i data-lucide="baby" class="w-4 h-4"></i>
+          <span>Pediatrics (Viral Fever)</span>
+        </button>
+        <button type="button" data-preset="homeopathy" class="preset-btn px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center gap-2 transition-all">
+          <i data-lucide="flower2" class="w-4 h-4"></i>
+          <span>Homeopathy (Migraine & Generals)</span>
+        </button>
+        <button type="button" data-preset="psychiatry" class="preset-btn px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center gap-2 transition-all">
+          <i data-lucide="brain" class="w-4 h-4"></i>
+          <span>Psychiatry (Burnout & GAD-7)</span>
+        </button>
+      </div>
+
+      <!-- Main Simulator Container -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left Column: Ambient Voice Intake & Transcript Player -->
+        <div class="lg:col-span-5 bg-slate-50 dark:bg-slate-950 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-lg flex flex-col h-full">
+          
+          <!-- Header info -->
+          <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+            <div>
+              <span id="sim-specialty-badge" class="text-[11px] uppercase font-bold text-teal-600 dark:text-teal-400 tracking-wider block">
+                Internal Medicine / Cardiology
+              </span>
+              <h3 id="sim-patient-info" class="text-sm font-bold text-slate-800 dark:text-slate-200">
+                John Miller, 54 Male (MRN: #CM-8921)
+              </h3>
+            </div>
+            <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-[11px] font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Ready
+            </div>
+          </div>
+
+          <!-- Ambient Simulation Controller -->
+          <div class="my-4 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-3">
+                <div id="audio-waveform-container" class="flex items-center gap-1 audio-recording-inactive h-6">
+                  <span class="audio-bar"></span>
+                  <span class="audio-bar"></span>
+                  <span class="audio-bar"></span>
+                  <span class="audio-bar"></span>
+                  <span class="audio-bar"></span>
+                  <span class="audio-bar"></span>
+                  <span class="audio-bar"></span>
+                  <span class="audio-bar"></span>
+                </div>
+                <span id="record-status-text" class="text-xs text-slate-500 font-medium truncate max-w-[200px]">
+                  Click to simulate live voice intake
+                </span>
+              </div>
+            </div>
+
+            <button id="simulate-record-btn" type="button" class="w-full py-2.5 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-semibold text-xs flex items-center justify-center gap-2 shadow transition-all">
+              <i data-lucide="mic" class="w-4 h-4"></i>
+              <span>Simulate Patient-Doctor Voice Consultation</span>
+            </button>
+          </div>
+
+          <!-- Live Transcript Stream Area -->
+          <div class="flex-1 flex flex-col">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1">
+              <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+              Ambient Speech Transcript
+            </span>
+            <div class="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 min-h-[160px] text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-mono custom-scrollbar overflow-y-auto">
+              <p id="sim-transcript-text" class="italic">
+                "Doctor, for the past 3 days I've been feeling a heavy tightness right in the center of my chest whenever I climb the stairs..."
+              </p>
+            </div>
+          </div>
+
+          <!-- Feature badges -->
+          <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-500">
+            <span class="flex items-center gap-1">
+              <i data-lucide="languages" class="w-3 h-3 text-teal-500"></i>
+              Auto-Translates 24+ Dialects
+            </span>
+            <span class="flex items-center gap-1">
+              <i data-lucide="volume-2" class="w-3 h-3 text-teal-500"></i>
+              Noise Filtered
+            </span>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Structured AI Case Record Output -->
+        <div id="simulator-structured-output" class="lg:col-span-7 bg-white dark:bg-slate-950 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl flex flex-col transition-all">
+          
+          <!-- Top Header & Actions -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-lg bg-teal-100 dark:bg-teal-950 text-teal-600 dark:text-teal-400 flex items-center justify-center font-bold">
+                <i data-lucide="file-check" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-slate-900 dark:text-white">Generated Structured Case Note</h4>
+                <span class="text-[11px] text-emerald-700 dark:text-emerald-300 font-medium">99.8% Extraction Confidence • HL7 FHIR Compatible</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2">
+              <button id="copy-note-btn" type="button" class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5 transition-colors">
+                <i data-lucide="copy" class="w-3.5 h-3.5 text-teal-500"></i>
+                <span>Copy Note</span>
+              </button>
+              <button id="export-note-btn" type="button" class="px-3 py-1.5 rounded-lg bg-teal-50 dark:bg-teal-950 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+                <span>Sync to EHR</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Structured Content Grid -->
+          <div class="mt-4 space-y-4 text-xs">
+            
+            <!-- Vitals Bar -->
+            <div>
+              <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Extracted Vitals & Metrics</span>
+              <div id="sim-vitals-container" class="flex flex-wrap gap-2">
+                <!-- Injected dynamically -->
+              </div>
+            </div>
+
+            <!-- Chief Complaint & HPI -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Chief Complaint</span>
+                <p id="sim-chief-complaint" class="text-slate-800 dark:text-slate-200 font-medium">
+                  Retrosternal chest tightness and exertional dyspnea × 3 days.
+                </p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Past / Family / Generals</span>
+                <p id="sim-past-history" class="text-slate-800 dark:text-slate-200">
+                  Type 2 Diabetes (6 yrs), Essential Hypertension.
+                </p>
+              </div>
+            </div>
+
+            <!-- History of Present Illness (HPI) -->
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+              <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">History of Present Illness (HPI)</span>
+              <p id="sim-hpi" class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                Patient reports progressive retrosternal pressure provoked by exertion (climbing stairs), lasting 5-10 minutes, relieved by rest.
+              </p>
+            </div>
+
+            <!-- Homeopathy Repertory Rubrics Section (Conditional) -->
+            <div id="sim-homeopathy-specifics" class="hidden p-3 rounded-xl bg-purple-50/50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-900/40">
+              <span class="text-[10px] font-bold text-purple-700 dark:text-purple-300 uppercase tracking-wider block mb-1.5 flex items-center gap-1">
+                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                Repertorized Keynote Rubrics
+              </span>
+              <div id="sim-rubrics-container" class="space-y-1">
+                <!-- Injected dynamically -->
+              </div>
+            </div>
+
+            <!-- ICD-10 & Differential Diagnosis Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- ICD-10 Codes -->
+              <div>
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Suggested ICD-10 Coding</span>
+                <div id="sim-icd-container" class="space-y-1.5">
+                  <!-- Injected dynamically -->
+                </div>
+              </div>
+
+              <!-- Differential Diagnoses -->
+              <div>
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Differential Probability / Simillimum</span>
+                <div id="sim-ddx-container" class="space-y-1.5">
+                  <!-- Injected dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Recommended Plan -->
+            <div class="p-3 rounded-xl bg-teal-50/60 dark:bg-teal-950/30 border border-teal-200/80 dark:border-teal-900/50">
+              <span class="text-[10px] font-bold text-teal-800 dark:text-teal-300 uppercase tracking-wider block mb-1">Recommended Plan & Orders</span>
+              <p id="sim-plan" class="text-teal-900 dark:text-teal-200 font-medium">
+                12-lead ECG stat, high-sensitivity Troponin I, Fasting Lipid Profile & HbA1c. Sublingual Nitroglycerin PRN.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       5. Problem vs Solution Comparison Matrix
+       ========================================================================= -->
+  <section class="py-20 bg-slate-50 dark:bg-slate-900/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Why Clinicians Are Retiring Manual Intake Forms
+        </h2>
+        <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg mt-3">
+          Traditional EHR typing steals 45% of consultation time. CuraCase restores your focus directly onto the patient.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        
+        <!-- Old Way Card -->
+        <div class="p-8 rounded-2xl bg-white dark:bg-slate-950 border border-red-200 dark:border-red-950/60 shadow-sm relative overflow-hidden">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-950/80 text-red-600 dark:text-red-400 flex items-center justify-center font-bold">
+              <i data-lucide="x-circle" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">Traditional Case Taking</h3>
+              <p class="text-xs text-red-500 font-semibold">Fragmented, Clunky & Exhausting</p>
+            </div>
+          </div>
+
+          <ul class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
+            <li class="flex items-start gap-3">
+              <i data-lucide="x" class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5"></i>
+              <span><strong>18–25 Minutes</strong> spent typing into rigid drop-down menus while facing away from the patient.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="x" class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5"></i>
+              <span><strong>Missed Clinical Nuances:</strong> Subtle modality clues, mental symptoms, and family history get lost in free-text boxes.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="x" class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5"></i>
+              <span><strong>Coding Errors & Claim Denials:</strong> Manual lookup for ICD-10 and SNOMED codes causes billing friction.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="x" class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5"></i>
+              <span><strong>Evening "Pajama Time":</strong> 2+ hours spent finishing backlog notes after clinic hours.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- CuraCase AI Way Card -->
+        <div class="p-8 rounded-2xl bg-gradient-to-b from-teal-500/10 to-transparent dark:from-teal-950/30 dark:to-slate-950/50 border border-teal-500/40 shadow-xl relative overflow-hidden glow-teal">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold shadow-md">
+              <i data-lucide="check-circle" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white">With CuraCase AI</h3>
+              <p class="text-xs text-teal-600 dark:text-teal-400 font-semibold">Effortless, Ambient & 100% Focused</p>
+            </div>
+          </div>
+
+          <ul class="space-y-4 text-sm text-slate-700 dark:text-slate-200">
+            <li class="flex items-start gap-3">
+              <i data-lucide="check" class="w-5 h-5 text-teal-600 dark:text-teal-400 flex-shrink-0 mt-0.5 font-bold"></i>
+              <span><strong>Under 3 Minutes:</strong> Ambient microphone listens and generates clinical SOAP notes ready before the patient leaves the room.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="check" class="w-5 h-5 text-teal-600 dark:text-teal-400 flex-shrink-0 mt-0.5 font-bold"></i>
+              <span><strong>Multi-Specialty Intelligence:</strong> Dynamic templates adapt for Pediatrics, Homeopathy, Psychiatry, and Cardiology.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="check" class="w-5 h-5 text-teal-600 dark:text-teal-400 flex-shrink-0 mt-0.5 font-bold"></i>
+              <span><strong>Zero Coding Headaches:</strong> Automatic high-accuracy ICD-10 & SNOMED CT assignment with drug-drug alerts.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i data-lucide="check" class="w-5 h-5 text-teal-600 dark:text-teal-400 flex-shrink-0 mt-0.5 font-bold"></i>
+              <span><strong>Reclaim Your Evenings:</strong> Finish all documentation in-stride and see up to 5 more patients every day.</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       6. Core Platform Features (6 Pillars)
+       ========================================================================= -->
+  <section id="features" class="py-24 bg-white dark:bg-[#0a0f1d]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 text-xs font-bold uppercase tracking-wider mb-3">
+          Comprehensive Clinical Suite
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Everything You Need for Effortless Case Taking
+        </h2>
+        <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg mt-3">
+          Built in collaboration with leading clinicians to handle complex, messy medical dialogues without missing a single detail.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Feature 1 -->
+        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-teal-500 transition-all glow-card">
+          <div class="w-12 h-12 rounded-xl bg-teal-100 dark:bg-teal-950/80 text-teal-600 dark:text-teal-400 flex items-center justify-center mb-5">
+            <i data-lucide="mic" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Ambient Voice Scribe</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Place your laptop, phone, or tablet on your desk. CuraCase filters ambient background noise, understands medical accents, and turns natural dialogue into structured records.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-teal-500 transition-all glow-card">
+          <div class="w-12 h-12 rounded-xl bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center mb-5">
+            <i data-lucide="layout-grid" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Specialty-Adaptive Templates</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Whether taking an extensive Homeopathic constitutional history, Pediatric immunization milestone check, or Psychiatric MSE, forms adapt on the fly.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-teal-500 transition-all glow-card">
+          <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-5">
+            <i data-lucide="barcode" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Smart ICD-10 & SNOMED CT</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Automatically maps clinical findings to accurate billable codes with justification notes, reducing claim rejections by up to 92%.
+          </p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-teal-500 transition-all glow-card">
+          <div class="w-12 h-12 rounded-xl bg-purple-100 dark:bg-purple-950/80 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-5">
+            <i data-lucide="git-branch" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Longitudinal Case Timelines</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Visual graphs track symptom progression, lab values, and medication efficacy over months or years with instant follow-up comparison.
+          </p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-teal-500 transition-all glow-card">
+          <div class="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-5">
+            <i data-lucide="refresh-cw" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">1-Click EHR Interoperability</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Direct two-way integration with Epic, Cerner, AthenaHealth, Kareo, eClinicalWorks, and custom FHIR/HL7 database APIs.
+          </p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-teal-500 transition-all glow-card">
+          <div class="w-12 h-12 rounded-xl bg-teal-100 dark:bg-teal-950/80 text-teal-600 dark:text-teal-400 flex items-center justify-center mb-5">
+            <i data-lucide="wifi-off" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Offline-First Mobility</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Take cases on rounds, rural camps, or home visits without active internet. Encrypted local storage auto-syncs safely once connected.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       7. Multi-Specialty Template Deep-Dive
+       ========================================================================= -->
+  <section id="specialties" class="py-20 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Tailored Protocols for Every Clinical Discipline
+        </h2>
+        <p class="text-slate-600 dark:text-slate-300 text-base mt-2">
+          Switch specialties to see how CuraCase customizes field structure, diagnostic criteria, and clinical questions.
+        </p>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="flex flex-wrap justify-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-4 mb-8">
+        <button type="button" data-tab="tab-allopathy" class="spec-tab-btn px-5 py-2.5 rounded-xl font-semibold text-sm border-b-2 border-teal-600 text-teal-600 dark:text-teal-400 bg-teal-50/50 dark:bg-teal-950/30 transition-all">
+          General & Internal Medicine
+        </button>
+        <button type="button" data-tab="tab-homeopathy" class="spec-tab-btn px-5 py-2.5 rounded-xl font-semibold text-sm border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-all">
+          Homeopathy & Integrative
+        </button>
+        <button type="button" data-tab="tab-pediatrics" class="spec-tab-btn px-5 py-2.5 rounded-xl font-semibold text-sm border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-all">
+          Pediatrics & Neonatology
+        </button>
+        <button type="button" data-tab="tab-psychiatry" class="spec-tab-btn px-5 py-2.5 rounded-xl font-semibold text-sm border-b-2 border-transparent text-slate-600 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-all">
+          Psychiatry & Behavioral
+        </button>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div class="max-w-4xl mx-auto">
+        
+        <!-- Tab 1: Allopathy -->
+        <div id="tab-allopathy" class="spec-tab-content bg-white dark:bg-slate-950 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-md">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">Allopathic H&P Architecture</span>
+            <span class="text-xs text-slate-500">Standard SOAP Protocol</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+              <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1">Subjective (S)</h4>
+              <p class="text-slate-600 dark:text-slate-400">Chief complaint, OPQRST pain profiling, ROS by 14 body systems, allergy & med reconciliation.</p>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+              <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1">Objective (O)</h4>
+              <p class="text-slate-600 dark:text-slate-400">Vitals telemetry sync, physical examination by systems (CVS, RS, PA, CNS), point-of-care lab feeds.</p>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+              <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1">Assessment & Plan (A/P)</h4>
+              <p class="text-slate-600 dark:text-slate-400">Differential diagnosis tree, primary ICD-10/CPT codes, e-Prescription with interaction warnings.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Homeopathy -->
+        <div id="tab-homeopathy" class="spec-tab-content hidden bg-white dark:bg-slate-950 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-md">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400">Classical Homeopathic Case Taking</span>
+            <span class="text-xs text-slate-500">Kent & Boenninghausen Framework</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div class="p-3 bg-purple-50/40 dark:bg-purple-950/30 rounded-xl border border-purple-100 dark:border-purple-900/40">
+              <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1">Constitutional Generals</h4>
+              <p class="text-slate-600 dark:text-slate-400">Thermal state (Chilly/Warm), appetite & cravings (salt, sweets, spices), thirst, perspiration, sleep posture.</p>
+            </div>
+            <div class="p-3 bg-purple-50/40 dark:bg-purple-950/30 rounded-xl border border-purple-100 dark:border-purple-900/40">
+              <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1">Mind & Disposition</h4>
+              <p class="text-slate-600 dark:text-slate-400">Ailments from grief, mortification, anger. Consolation modality, fears, anxiety triggers, and dreams.</p>
+            </div>
+            <div class="p-3 bg-purple-50/40 dark:bg-purple-950/30 rounded-xl border border-purple-100 dark:border-purple-900/40">
+              <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1">Auto-Repertorization</h4>
+              <p class="text-slate-600 dark:text-slate-400">Automatic extraction of Kent rubrics, totality evaluation, miasmatic analysis & Simillimum scoring.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Pediatrics -->
+        <div id="tab-pediatrics" class="spec-tab-content hidden bg-white dark:bg-slate-950 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-md">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">Pediatric Developmental Engine</span>
+            <span class="text-xs text-slate-500">WHO & CDC Growth Benchmarks</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+              <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1">Birth & Perinatal History</h4>
+              <p class="text-slate-600 dark:text-slate-400">Gestational age, birth weight, APGAR scores, neonatal jaundice or NICU stay record.</p>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+              <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1">Growth & Milestones</h4>
+              <p class="text-slate-600 dark:text-slate-400">Motor, language, social developmental tracking with percentile curves & feeding history.</p>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+              <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1">Weight-Based Dosage Safety</h4>
+              <p class="text-slate-600 dark:text-slate-400">Automatic mg/kg pediatric dosing calculator and immunization schedule reminders.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Psychiatry -->
+        <div id="tab-psychiatry" class="spec-tab-content hidden bg-white dark:bg-slate-950 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-md">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400">Psychiatric Evaluation Architecture</span>
+            <span class="text-xs text-slate-500">DSM-5-TR Compliant</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+              <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1">Mental State Exam (MSE)</h4>
+              <p class="text-slate-600 dark:text-slate-400">Appearance, speech, mood/affect, thought process/content, perception, cognitive screening.</p>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+              <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1">Integrated Screeners</h4>
+              <p class="text-slate-600 dark:text-slate-400">Automated ambient scoring for PHQ-9 (Depression), GAD-7 (Anxiety), and C-SSRS (Risk).</p>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+              <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-1">Biopsychosocial Formulation</h4>
+              <p class="text-slate-600 dark:text-slate-400">Predisposing, precipitating, perpetuating, and protective factor matrix compilation.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       8. Interactive Practice ROI / Time Saved Calculator
+       ========================================================================= -->
+  <section id="calculator" class="py-20 bg-white dark:bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 text-xs font-bold uppercase tracking-wider mb-3">
+          Interactive ROI Estimator
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Calculate Your Practice Time & Revenue Savings
+        </h2>
+        <p class="text-slate-600 dark:text-slate-300 text-base mt-2">
+          Adjust the sliders to match your clinic size and see how many documentation hours you reclaim each month.
+        </p>
+      </div>
+
+      <div class="max-w-4xl mx-auto bg-slate-50 dark:bg-slate-950 rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-800 shadow-xl">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <!-- Sliders Left Panel -->
+          <div class="lg:col-span-7 space-y-6">
+            
+            <!-- Slider 1: Clinicians -->
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <label for="calc-doctors" class="text-sm font-bold text-slate-700 dark:text-slate-200">Practicing Clinicians / Doctors</label>
+                <span id="calc-doctors-val" class="text-sm font-extrabold text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950 px-2.5 py-0.5 rounded-lg">2 Clinicians</span>
+              </div>
+              <input id="calc-doctors" type="range" min="1" max="25" value="2" class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
+              <div class="flex justify-between text-[11px] text-slate-500 mt-1">
+                <span>1 Doctor</span>
+                <span>25 Doctors</span>
+              </div>
+            </div>
+
+            <!-- Slider 2: Patients/day -->
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <label for="calc-patients" class="text-sm font-bold text-slate-700 dark:text-slate-200">Patient Consultations per Doctor / Day</label>
+                <span id="calc-patients-val" class="text-sm font-extrabold text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950 px-2.5 py-0.5 rounded-lg">20 Patients / day</span>
+              </div>
+              <input id="calc-patients" type="range" min="5" max="50" step="5" value="20" class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
+              <div class="flex justify-between text-[11px] text-slate-500 mt-1">
+                <span>5 Patients</span>
+                <span>50 Patients</span>
+              </div>
+            </div>
+
+            <!-- Slider 3: Mins per case -->
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <label for="calc-time" class="text-sm font-bold text-slate-700 dark:text-slate-200">Current Minutes Spent Documenting per Case</label>
+                <span id="calc-time-val" class="text-sm font-extrabold text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-950 px-2.5 py-0.5 rounded-lg">15 Minutes / intake</span>
+              </div>
+              <input id="calc-time" type="range" min="10" max="35" step="5" value="15" class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer">
+              <div class="flex justify-between text-[11px] text-slate-500 mt-1">
+                <span>10 mins</span>
+                <span>35 mins</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Dynamic Result Card Right Panel -->
+          <div class="lg:col-span-5 bg-gradient-to-br from-teal-600 to-teal-800 rounded-2xl p-6 text-white shadow-xl flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-teal-200 block mb-1">Your Estimated Practice Impact</span>
+              <h3 class="text-xl font-bold mb-6">Monthly Productivity Gains</h3>
+
+              <div class="space-y-4">
+                <div class="p-3.5 bg-white/10 rounded-xl backdrop-blur-sm">
+                  <span class="text-xs text-teal-100 block">Doctor Hours Saved / Month</span>
+                  <span id="calc-out-hours" class="text-2xl sm:text-3xl font-extrabold tracking-tight">154 hrs</span>
+                </div>
+
+                <div class="p-3.5 bg-white/10 rounded-xl backdrop-blur-sm">
+                  <span class="text-xs text-teal-100 block">Extra Patient Capacity / Month</span>
+                  <span id="calc-out-capacity" class="text-2xl sm:text-3xl font-extrabold tracking-tight">+462 patients</span>
+                </div>
+
+                <div class="p-3.5 bg-white/10 rounded-xl backdrop-blur-sm">
+                  <span class="text-xs text-teal-100 block">Annual Revenue Potential Unlocked</span>
+                  <span id="calc-out-revenue" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-emerald-300">$157,080</span>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="open-demo-modal mt-6 w-full py-3 rounded-xl bg-white text-teal-900 font-bold text-sm shadow hover:bg-teal-50 transition-colors">
+              Claim Your Free Trial
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       9. Security, Privacy & Enterprise Compliance
+       ========================================================================= -->
+  <section class="py-20 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold uppercase tracking-wider mb-3">
+          Bank-Grade Security
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Uncompromised Patient Privacy & Compliance
+        </h2>
+        <p class="text-slate-600 dark:text-slate-300 text-base mt-2">
+          Your patient data is sacred. CuraCase operates on strict zero-retention voice pipelines with full HIPAA compliance.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <div class="w-10 h-10 rounded-lg bg-teal-100 dark:bg-teal-950 text-teal-600 dark:text-teal-400 flex items-center justify-center mb-4">
+            <i data-lucide="shield" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 dark:text-white text-base mb-1">HIPAA & GDPR Ready</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Signed Business Associate Agreements (BAA) provided for all clinical practices from Day 1.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <div class="w-10 h-10 rounded-lg bg-sky-100 dark:bg-sky-950 text-sky-600 dark:text-sky-400 flex items-center justify-center mb-4">
+            <i data-lucide="mic-off" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 dark:text-white text-base mb-1">Zero Audio Retention</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Voice streams are encrypted in transit, converted to clinical text in memory, and immediately purged.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <div class="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4">
+            <i data-lucide="key" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 dark:text-white text-base mb-1">AES-256 Bit Encryption</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            All stored patient records and notes are protected with military-grade encryption at rest and TLS 1.3 in transit.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <div class="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
+            <i data-lucide="user-check" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 dark:text-white text-base mb-1">Role-Based Access</h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Granular clinical permissions for doctors, nurses, billing staff, and clinic administrators with full audit logs.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       10. Clinician Testimonials & Statistics
+       ========================================================================= -->
+  <section class="py-20 bg-white dark:bg-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Stats Row -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center mb-20 p-8 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+        <div>
+          <span class="text-3xl sm:text-4xl font-extrabold text-teal-600 dark:text-teal-400">1,400+</span>
+          <span class="text-xs font-semibold text-slate-500 block mt-1">Clinics & Hospitals</span>
+        </div>
+        <div>
+          <span class="text-3xl sm:text-4xl font-extrabold text-teal-600 dark:text-teal-400">4.8M+</span>
+          <span class="text-xs font-semibold text-slate-500 block mt-1">Cases Documented</span>
+        </div>
+        <div>
+          <span class="text-3xl sm:text-4xl font-extrabold text-teal-600 dark:text-teal-400">72%</span>
+          <span class="text-xs font-semibold text-slate-500 block mt-1">Time Saved per Intake</span>
+        </div>
+        <div>
+          <span class="text-3xl sm:text-4xl font-extrabold text-teal-600 dark:text-teal-400">4.9 / 5</span>
+          <span class="text-xs font-semibold text-slate-500 block mt-1">Practitioner Rating</span>
+        </div>
+      </div>
+
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Trusted by Doctors Across Specialties
+        </h2>
+        <p class="text-slate-600 dark:text-slate-300 text-base mt-2">
+          Read how healthcare providers are reclaiming their time and improving patient rapport.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Review 1 -->
+        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between shadow-sm">
+          <div>
+            <div class="flex text-amber-400 gap-1 mb-3 text-sm">
+              ★ ★ ★ ★ ★
+            </div>
+            <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed italic mb-6">
+              "As an internal medicine physician seeing 28 patients a day, I was drowning in paperwork. CuraCase accurately captures the patient's chest pain narrative and gives me a pristine SOAP note before they step out."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <div class="w-10 h-10 rounded-full bg-teal-600 text-white font-bold flex items-center justify-center text-sm">
+              DR
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-slate-900 dark:text-white">Dr. Robert Hayes, MD</h4>
+              <span class="text-xs text-slate-500">Chief of Internal Medicine, Austin Clinic</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between shadow-sm">
+          <div>
+            <div class="flex text-amber-400 gap-1 mb-3 text-sm">
+              ★ ★ ★ ★ ★
+            </div>
+            <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed italic mb-6">
+              "Classical homeopathic case taking requires capturing exact mental rubrics, thermals, and unusual keynote modalities. CuraCase is the first platform that understands Kent rubrics and repertorizes in real-time."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <div class="w-10 h-10 rounded-full bg-purple-600 text-white font-bold flex items-center justify-center text-sm">
+              AM
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-slate-900 dark:text-white">Dr. Ananya Mukherjee, MD (Hom)</h4>
+              <span class="text-xs text-slate-500">Senior Homeopathic Consultant</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between shadow-sm">
+          <div>
+            <div class="flex text-amber-400 gap-1 mb-3 text-sm">
+              ★ ★ ★ ★ ★
+            </div>
+            <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed italic mb-6">
+              "Our pediatric practice saved 90 minutes per doctor every single day. The automated weight-based dosage validation and immunization milestone tracking make it indispensable."
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <div class="w-10 h-10 rounded-full bg-sky-600 text-white font-bold flex items-center justify-center text-sm">
+              EL
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-slate-900 dark:text-white">Dr. Elena Lopez, MD, FAAP</h4>
+              <span class="text-xs text-slate-500">Pediatric Medical Director, Sunrise Health</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       11. Transparent Pricing Plans
+       ========================================================================= -->
+  <section id="pricing" class="py-24 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 text-xs font-bold uppercase tracking-wider mb-3">
+          Simple, Transparent Pricing
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Invest in Your Time. Start Risk-Free.
+        </h2>
+        <p class="text-slate-600 dark:text-slate-300 text-base mt-2">
+          All plans include 14-day unrestricted free trial. No credit card required.
+        </p>
+
+        <!-- Billing Toggle -->
+        <div class="flex items-center justify-center gap-3 mt-8">
+          <span class="text-sm font-semibold text-slate-700 dark:text-slate-300">Monthly</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="billing-toggle" checked class="sr-only peer">
+            <div class="w-12 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:width-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
+          </label>
+          <span class="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+            Annual Billing
+            <span class="bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full">Save 20%</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Pricing Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
+        
+        <!-- Starter Plan -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-2">Solo Practitioner</span>
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Starter</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mb-6">Ideal for independent doctors and private outpatient clinics.</p>
+
+            <div class="flex items-baseline gap-1 mb-6">
+              <span id="price-starter" class="text-4xl font-extrabold text-slate-900 dark:text-white">$29</span>
+              <span class="price-period text-xs text-slate-500">/ month (billed annually)</span>
+            </div>
+
+            <ul class="space-y-3 text-xs text-slate-700 dark:text-slate-300 mb-8">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-500"></i>
+                <span>Up to 150 Ambient Consultations / month</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-500"></i>
+                <span>All Specialty Templates Included</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-500"></i>
+                <span>ICD-10 & SNOMED CT Auto-Coding</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-500"></i>
+                <span>PDF & Text Case Record Export</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-500"></i>
+                <span>HIPAA & GDPR Security Compliance</span>
+              </li>
+            </ul>
+          </div>
+
+          <button type="button" class="open-demo-modal w-full py-3 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-teal-500 font-bold text-xs text-slate-800 dark:text-white transition-colors">
+            Start 14-Day Free Trial
+          </button>
+        </div>
+
+        <!-- Pro Plan (Featured) -->
+        <div class="p-8 rounded-3xl bg-slate-900 text-white dark:bg-slate-900 border-2 border-teal-500 shadow-2xl relative flex flex-col justify-between glow-teal">
+          <div class="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-[11px] font-bold uppercase tracking-wider px-3.5 py-1 rounded-full shadow">
+            Most Popular for Practices
+          </div>
+
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-teal-400 block mb-2">Growing Group Clinic</span>
+            <h3 class="text-2xl font-bold text-white mb-2">Clinic Pro</h3>
+            <p class="text-xs text-slate-300 mb-6">For multi-doctor clinics seeking full EHR sync and unlimited ambient notes.</p>
+
+            <div class="flex items-baseline gap-1 mb-6">
+              <span id="price-pro" class="text-4xl font-extrabold text-white">$79</span>
+              <span class="price-period text-xs text-slate-400">/ month (billed annually)</span>
+            </div>
+
+            <ul class="space-y-3 text-xs text-slate-200 mb-8">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                <span><strong>Unlimited</strong> Ambient Case Scribing</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                <span>Full Two-Way EHR Integration (Epic, Cerner, Athena)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                <span>Custom Specialty Template Builder</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                <span>Longitudinal Case Timelines & Analytics</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                <span>Priority 24/7 Clinical Concierge Support</span>
+              </li>
+            </ul>
+          </div>
+
+          <button type="button" class="open-demo-modal w-full py-3.5 rounded-xl bg-teal-500 hover:bg-teal-600 text-slate-950 font-extrabold text-xs shadow-lg transition-all">
+            Start Free 14-Day Pro Trial
+          </button>
+        </div>
+
+        <!-- Enterprise Plan -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-2">Hospitals & Health Networks</span>
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Enterprise</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mb-6">Tailored deployments with custom LLM hosting and dedicated account management.</p>
+
+            <div class="flex items-baseline gap-1 mb-6">
+              <span class="text-3xl font-extrabold text-slate-900 dark:text-white">Custom</span>
+              <span class="text-xs text-slate-500">/ tailored volume</span>
+            </div>
+
+            <ul class="space-y-3 text-xs text-slate-700 dark:text-slate-300 mb-8">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-500"></i>
+                <span>Unlimited Clinicians & Sub-Departments</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-500"></i>
+                <span>On-Premise / Private Cloud VPC Options</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-500"></i>
+                <span>Dedicated Single Sign-On (SSO / SAML)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-500"></i>
+                <span>Custom Clinical Ontology Fine-Tuning</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-teal-500"></i>
+                <span>Dedicated Clinical Implementation Manager</span>
+              </li>
+            </ul>
+          </div>
+
+          <button type="button" class="open-demo-modal w-full py-3 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-teal-500 font-bold text-xs text-slate-800 dark:text-white transition-colors">
+            Contact Enterprise Sales
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       12. Frequently Asked Questions (Accordion)
+       ========================================================================= -->
+  <section id="faq" class="py-20 bg-white dark:bg-slate-900/60">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-14">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-slate-600 dark:text-slate-300 text-base mt-2">
+          Have questions about security, workflow integration, or specialty templates?
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        
+        <!-- FAQ 1 -->
+        <div class="faq-item rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 overflow-hidden">
+          <button type="button" class="faq-question w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-slate-900 dark:text-white text-sm sm:text-base">
+            <span>Does CuraCase record or store actual patient voice conversations?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+          <div class="faq-answer hidden px-5 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800/60 pt-3">
+            No. CuraCase strictly follows a <strong>Zero Audio Retention</strong> architecture. The live audio stream is processed ephemerally in RAM to construct the clinical transcript and is immediately discarded. No audio recordings are ever saved or stored on our servers.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 overflow-hidden">
+          <button type="button" class="faq-question w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-slate-900 dark:text-white text-sm sm:text-base">
+            <span>How does CuraCase integrate with our existing EHR / EMR system?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+          <div class="faq-answer hidden px-5 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800/60 pt-3">
+            CuraCase integrates seamlessly through standard HL7 and SMART on FHIR protocols. With a single click or desktop keyboard shortcut, generated SOAP notes, ICD-10 codes, and vitals are pushed directly into your EHR encounter (e.g. Epic, Cerner, AthenaHealth, Kareo, eClinicalWorks). A browser extension is also available for web-based EHRs.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 overflow-hidden">
+          <button type="button" class="faq-question w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-slate-900 dark:text-white text-sm sm:text-base">
+            <span>Can it accurately handle medical jargon and different accents?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+          <div class="faq-answer hidden px-5 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800/60 pt-3">
+            Yes. Our acoustic and clinical language models are trained specifically on hundreds of thousands of multi-specialty clinical dialogues spanning 24+ languages and regional accents, achieving a 99.8% medical term accuracy rate.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 overflow-hidden">
+          <button type="button" class="faq-question w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-slate-900 dark:text-white text-sm sm:text-base">
+            <span>Can we customize case intake templates for our specific specialty?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+          <div class="faq-answer hidden px-5 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800/60 pt-3">
+            Absolutely. You can use our pre-built specialty protocols (General Medicine, Homeopathy, Pediatrics, Psychiatry, Cardiology, Orthopedics, Ayurveda) or use our visual drag-and-drop template designer to match your exact clinic workflow.
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 overflow-hidden">
+          <button type="button" class="faq-question w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-slate-900 dark:text-white text-sm sm:text-base">
+            <span>What hardware do I need to run CuraCase in my clinic?</span>
+            <i data-lucide="chevron-down" class="faq-icon w-5 h-5 text-slate-400 transition-transform duration-200 flex-shrink-0"></i>
+          </button>
+          <div class="faq-answer hidden px-5 pb-5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800/60 pt-3">
+            No proprietary hardware is needed! CuraCase works right in any modern web browser (Chrome, Edge, Safari, Firefox) on your existing laptop, desktop, iPad, Android tablet, or smartphone.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       13. High-Converting Bottom CTA Banner
+       ========================================================================= -->
+  <section class="py-20 relative overflow-hidden bg-gradient-to-br from-teal-900 via-slate-900 to-slate-950 text-white">
+    <div class="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-bold uppercase tracking-wider mb-6 border border-teal-500/30">
+        Reclaim Your Evenings
+      </div>
+      
+      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-6 leading-tight">
+        Ready to Eliminate Case Taking Burnout and Save 2 Hours Every Day?
+      </h2>
+      
+      <p class="text-base sm:text-lg text-teal-100/80 max-w-2xl mx-auto mb-10">
+        Join over 1,400+ clinics delivering deeper patient connections with intelligent ambient case taking.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button type="button" class="open-demo-modal w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-teal-400 to-teal-500 hover:from-teal-300 hover:to-teal-400 text-slate-950 font-extrabold text-base shadow-xl shadow-teal-500/30 transition-all transform hover:-translate-y-0.5">
+          Start 14-Day Full Free Access
+        </button>
+        <button type="button" class="open-demo-modal w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-base transition-colors">
+          Schedule VIP Clinic Walkthrough
+        </button>
+      </div>
+
+      <p class="text-xs text-teal-200/60 mt-6">
+        No credit card required • Instant 2-minute activation • Fully HIPAA & BAA Compliant
+      </p>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       14. Footer
+       ========================================================================= -->
+  <footer class="bg-slate-950 text-slate-400 text-xs py-14 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-slate-800/80">
+        
+        <!-- Brand column -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-lg bg-teal-600 flex items-center justify-center text-white font-bold">
+              <i data-lucide="activity" class="w-5 h-5"></i>
+            </div>
+            <span class="text-lg font-bold text-white tracking-tight">CuraCase<span class="text-teal-400">AI</span></span>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed max-w-sm">
+            The next-generation clinical case taking and ambient anamnesis platform designed to empower healthcare practitioners with structured notes in minutes.
+          </p>
+          <div class="flex items-center gap-3 text-slate-500 pt-2">
+            <a href="#" class="hover:text-teal-400 transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+            <a href="#" class="hover:text-teal-400 transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+            <a href="#" class="hover:text-teal-400 transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
+            <a href="#" class="hover:text-teal-400 transition-colors"><i data-lucide="mail" class="w-4 h-4"></i></a>
+          </div>
+        </div>
+
+        <!-- Product links -->
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4">Product</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#simulator" class="hover:text-teal-400 transition-colors">Case Simulator</a></li>
+            <li><a href="#features" class="hover:text-teal-400 transition-colors">Ambient Scribe</a></li>
+            <li><a href="#specialties" class="hover:text-teal-400 transition-colors">Specialty Templates</a></li>
+            <li><a href="#calculator" class="hover:text-teal-400 transition-colors">ROI Calculator</a></li>
+            <li><a href="#pricing" class="hover:text-teal-400 transition-colors">Pricing Plans</a></li>
+          </ul>
+        </div>
+
+        <!-- Specialties -->
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4">Specialties</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#specialties" class="hover:text-teal-400 transition-colors">Internal Medicine</a></li>
+            <li><a href="#specialties" class="hover:text-teal-400 transition-colors">Pediatrics</a></li>
+            <li><a href="#specialties" class="hover:text-teal-400 transition-colors">Homeopathy & Holistic</a></li>
+            <li><a href="#specialties" class="hover:text-teal-400 transition-colors">Psychiatry</a></li>
+            <li><a href="#specialties" class="hover:text-teal-400 transition-colors">Ayurvedic Medicine</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal & Compliance -->
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4">Trust & Legal</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="hover:text-teal-400 transition-colors">HIPAA Compliance</a></li>
+            <li><a href="#" class="hover:text-teal-400 transition-colors">BAA Agreement</a></li>
+            <li><a href="#" class="hover:text-teal-400 transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-teal-400 transition-colors">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-teal-400 transition-colors">Security Architecture</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Copyright & Bottom Bar -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+        <p>© 2026 CuraCase AI Inc. All rights reserved. Designed for healthcare professionals.</p>
+        <div class="flex items-center gap-6">
+          <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> All Systems Operational</span>
+          <span>SOC-2 Type II Certified</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       15. Book a Demo / Early Access Modal Dialog
+       ========================================================================= -->
+  <div id="demo-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm hidden modal-overlay">
+    <div class="modal-content bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-2xl relative overflow-hidden">
+      
+      <!-- Close button -->
+      <button id="close-demo-modal" class="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Form View -->
+      <form id="demo-booking-form" class="space-y-4">
+        <div>
+          <div class="inline-flex items-center gap-1.5 text-xs font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider mb-1">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            14-Day Free Access
+          </div>
+          <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Get Started with CuraCase AI</h3>
+          <p class="text-xs text-slate-500 mt-1">Experience automated case taking tailored to your specialty.</p>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Full Name & Credentials *</label>
+            <input type="text" required placeholder="Dr. Sarah Jenkins, MD" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Work Email Address *</label>
+            <input type="email" required placeholder="doctor@clinicname.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Specialty *</label>
+              <select required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+                <option value="general">Internal / Family Medicine</option>
+                <option value="pediatrics">Pediatrics</option>
+                <option value="homeopathy">Homeopathy / Integrative</option>
+                <option value="psychiatry">Psychiatry & Behavioral</option>
+                <option value="ayurveda">Ayurveda</option>
+                <option value="cardiology">Cardiology</option>
+                <option value="other">Other Specialty</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Practice Size *</label>
+              <select required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+                <option value="solo">Solo Doctor</option>
+                <option value="2-5">2 - 5 Doctors</option>
+                <option value="6-20">6 - 20 Doctors</option>
+                <option value="20+">Hospital / Health System (20+)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3">
+          <button type="submit" class="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-lg shadow-teal-500/25 transition-colors">
+            Request Custom Demo & 14-Day Pass
+          </button>
+        </div>
+
+        <p class="text-[10px] text-slate-500 text-center">
+          By submitting, you agree to our Terms of Service & Privacy Policy. No credit card required.
+        </p>
+      </form>
+
+      <!-- Success State View (Hidden by default) -->
+      <div id="demo-success-state" class="hidden text-center py-6 space-y-4">
+        <div class="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center">
+          <i data-lucide="check-check" class="w-8 h-8"></i>
+        </div>
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white">You're All Set!</h3>
+        <p class="text-xs text-slate-600 dark:text-slate-300 max-w-sm mx-auto leading-relaxed">
+          We've sent your 14-day full access credentials and a calendar link for your 1-on-1 walkthrough to your email.
+        </p>
+        <button type="button" onclick="document.getElementById('close-demo-modal').click()" class="px-6 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-white hover:bg-slate-200">
+          Close Window
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast notifications anchor container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm"></div>
+
+  <!-- Main JavaScript File -->
+  <script src="js/main.js"></script>
+</body>
+</html>
+
